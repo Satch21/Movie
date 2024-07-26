@@ -1,123 +1,33 @@
+
+//Post pour ajouter un acteur
 {
-  "nom": "Pitt",
-  "prenom": "Brad"
-} {
-  "nom": "Cruise",
-  "prenom": "Tom"
-} {
+  "nom": "Thurman",
+  "prenom":  "Uma"
 
-  "label": "Action"
-} {
+}
 
-  "nom": "Scorcese",
-  "prenom": "Martin"
-} {
-
-  "label": "Admin"
-} {
-
-  "titre": "Taxi Driver",
-  "synopsis": "tzzegzeg",
-  "duree": 120,
-  "anneeSortie": 1984,
+//Post pour ajout d'un nouveau film => utilisable dans Swagger
+{
+  "uuid": "00000000-0000-0000-0000-000000000000",
+  "titre": "Kill Bill",
+  "synopsis": "Au cours d'une cérémonie de mariage en plein désert, un commando fait irruption dans la chapelle et tire sur les convives. Laissée pour morte, la Mariée enceinte retrouve ses esprits après un coma de quatre ans.",
+  "duree": 112,
+  "anneeSortie": 2004,
   "realisateurId": 1,
   "genreId": 1,
   "acteurs": [
     {
-      "id": 1,
-      "nom": "Pitt",
-      "prenom": "Brad"
-    },
-    {
-      "id": 2,
-      "nom": "Cruise",
-      "prenom": "Tom"
+      "acteurId": 3
     }
   ]
-} {
-
-  "nom": "tt",
-  "prenom": "tt",
-  "email": "user@example.com",
-  "profilId": 1,
-  "filmsNotes": [
-    {
-      "film": {
-        "id": 1,
-        "uuid": "00000000-0000-0000-0000-000000000000",
-        "titre": "Taxi Driver",
-        "synopsis": "tzzegzeg",
-        "duree": 120,
-        "anneeSortie": 1984,
-        "realisateurId": 1,
-        "genreId": 1,
-  ],
-  "genre": {
-    "id": 0,
-    "uuid": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-    "label": "string"
-  },
-  "realisateur": {
-    "id": 1,
-
-    "nom": "Scorcese",
-    "prenom": "Martin"
-  }
 }
 
-{
 
-  "nom": "Laporte",
-  "prenom": "Jean-Michel",
-  "email": "laportjem@free.fr",
-  "profilId": 1,
-  "filmsNotes": [
-    {
-      "filmId": 1,
-      "note": 5
-    }
-  ]
-
-}
-
+//Put pour la modification du film  Once upon a time in Hollywood en ajoutant des acteurs => utilisable dans Swagger avec l'id 1
 {
   "uuid": "00000000-0000-0000-0000-000000000000",
   "titre": "Once upon a time in Hollywood",
-  "synopsis": "En 1969, la star de t�l�vision Rick Dalton et le cascadeur Cliff Booth, sa doublure de longue date, poursuivent leurs carri�res au sein d�une industrie qu�ils ne reconnaissent plus. ",
-  "duree": 161,
-  "anneeSortie": 2019,
-  "realisateurId": 1,
-  "genreId": 1,
-  "acteurs": [
-    {
-      "filmId": 0,
-      "acteurId": 1
-    },
-    {
-      "filmId": 0,
-      "acteurId": 2
-    }
-  ],
-  "genre": {
-    "id": 1,
-    "uuid": "00000000-0000-0000-0000-000000000000",
-    "label": "Action"
-  },
-  "realisateur": {
-    "id": 1,
-    "uuid": "00000000-0000-0000-0000-000000000000",
-    "nom": "Tarantino",
-    "prenom": "Quentin"
-  }
-}
-
-
-
-
-{
-  "uuid": "00000000-0000-0000-0000-000000000000",
-  "titre": "Once upon a time in Hollywood",
-  "synopsis": "En 1969, la star de t�l�vision Rick Dalton et le cascadeur Cliff Booth, sa doublure de longue date, poursuivent leurs carri�res au sein d�une industrie qu�ils ne reconnaissent plus. ",
+  "synopsis": "En 1969, la star de télévision Rick Dalton et le cascadeur Cliff Booth, sa doublure de longue date, poursuivent leurs carrières au sein d�une industrie qu'ils ne reconnaissent plus. ",
   "duree": 161,
   "anneeSortie": 2019,
   "realisateurId": 1,
