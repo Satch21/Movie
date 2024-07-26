@@ -4,6 +4,7 @@ using System;
 using System.Reflection.Emit;
 using System.Reflection.Metadata;
 using Movie.Models;
+using System.Linq;
 
 namespace Movie.Models;
 
@@ -57,17 +58,6 @@ public class MovieContext : DbContext
         });
 
 
-        builder.Entity<Film>()
-           .HasMany(e => e.Acteurs)
-           .WithMany(e => e.Films)
-           .UsingEntity(
-               "FilmActeur",
-               l => l.HasOne(typeof(Acteur)).WithMany().HasForeignKey("ActeurId").HasPrincipalKey(nameof(Acteur.Id)),
-               r => r.HasOne(typeof(Film)).WithMany().HasForeignKey("FilmId").HasPrincipalKey(nameof(Film.Id)),
-               j => j.HasKey("ActeurId", "FilmId"));
-
-
-
         builder.Entity<UtilisateurFilmNote>()
                  .HasKey(ufn => new { ufn.FilmId, ufn.UtilisateurId });
 
@@ -80,6 +70,57 @@ public class MovieContext : DbContext
             .HasOne(r => r.Film)
             .WithMany(t => t.FilmsNotes)
             .HasForeignKey(f => f.FilmId);
+
+
+        builder.Entity<FilmActeur>()
+             .HasKey(ufn => new { ufn.FilmId, ufn.ActeurId });
+
+        builder.Entity<FilmActeur>()
+            .HasOne(r => r.Film)
+            .WithMany(t => t.Acteurs)
+            .HasForeignKey(f => f.FilmId);
+
+        builder.Entity<FilmActeur>()
+            .HasOne(r => r.Acteur)
+            .WithMany(t => t.Films)
+            .HasForeignKey(f => f.ActeurId);
+
+
+        builder.Entity<Genre>().HasData(
+          new Genre { Id = 1, Label = "Action" });
+
+        builder.Entity<Realisateur>().HasData(
+          new Realisateur { Id = 1, Nom = "Tarantino", Prenom = "Quentin" });
+
+        builder.Entity<Acteur>().HasData(
+            new Acteur { Id = 1, Nom = "Pitt", Prenom = "Brad" });
+
+        builder.Entity<Acteur>().HasData(
+            new Acteur { Id = 2, Nom = "DiCaprio", Prenom = "Leonardo" });
+
+        builder.Entity<Profil>().HasData(
+           new Profil { Id = 1, Label = "Admin" });
+
+        builder.Entity<Profil>().HasData(
+            new Profil { Id = 2, Label = "Contributeur" });
+
+        builder.Entity<Profil>().HasData(
+            new Profil { Id = 3, Label = "Observateur" });
+
+        builder.Entity<Film>(b =>
+        {
+            b.HasData(new Film
+            {
+                Id = 1,
+                Titre = "Once upon a time in Hollywood",
+                Synopsis = "En 1969, la star de télévision Rick Dalton et le cascadeur Cliff Booth, sa doublure de longue date, poursuivent leurs carrières au sein d’une industrie qu’ils ne reconnaissent plus. ",
+                Duree = 161,
+                AnneeSortie = 2019,
+                GenreId = 1,
+                RealisateurId = 1
+            });
+        });
+        
     }
-   
+
 }

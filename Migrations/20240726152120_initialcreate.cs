@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Movie.Migrations
 {
     /// <inheritdoc />
@@ -127,12 +129,12 @@ namespace Movie.Migrations
                 name: "FilmActeur",
                 columns: table => new
                 {
-                    ActeurId = table.Column<long>(type: "bigint", nullable: false),
-                    FilmId = table.Column<long>(type: "bigint", nullable: false)
+                    FilmId = table.Column<long>(type: "bigint", nullable: false),
+                    ActeurId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FilmActeur", x => new { x.ActeurId, x.FilmId });
+                    table.PrimaryKey("PK_FilmActeur", x => new { x.FilmId, x.ActeurId });
                     table.ForeignKey(
                         name: "FK_FilmActeur_Acteurs_ActeurId",
                         column: x => x.ActeurId,
@@ -172,10 +174,44 @@ namespace Movie.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Acteurs",
+                columns: new[] { "Id", "Nom", "Prenom", "Uuid" },
+                values: new object[,]
+                {
+                    { 1L, "Pitt", "Brad", new Guid("00000000-0000-0000-0000-000000000000") },
+                    { 2L, "DiCaprio", "Leonardo", new Guid("00000000-0000-0000-0000-000000000000") }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Genres",
+                columns: new[] { "Id", "Label", "Uuid" },
+                values: new object[] { 1L, "Action", new Guid("00000000-0000-0000-0000-000000000000") });
+
+            migrationBuilder.InsertData(
+                table: "Profils",
+                columns: new[] { "Id", "Label", "Uuid" },
+                values: new object[,]
+                {
+                    { 1L, "Admin", new Guid("00000000-0000-0000-0000-000000000000") },
+                    { 2L, "Contributeur", new Guid("00000000-0000-0000-0000-000000000000") },
+                    { 3L, "Observateur", new Guid("00000000-0000-0000-0000-000000000000") }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Realisateurs",
+                columns: new[] { "Id", "Nom", "Prenom", "Uuid" },
+                values: new object[] { 1L, "Tarantino", "Quentin", new Guid("00000000-0000-0000-0000-000000000000") });
+
+            migrationBuilder.InsertData(
+                table: "Films",
+                columns: new[] { "Id", "AnneeSortie", "Duree", "GenreId", "RealisateurId", "Synopsis", "Titre", "Uuid" },
+                values: new object[] { 1L, 2019, 161, 1L, 1L, "En 1969, la star de télévision Rick Dalton et le cascadeur Cliff Booth, sa doublure de longue date, poursuivent leurs carrières au sein d’une industrie qu’ils ne reconnaissent plus. ", "Once upon a time in Hollywood", new Guid("00000000-0000-0000-0000-000000000000") });
+
             migrationBuilder.CreateIndex(
-                name: "IX_FilmActeur_FilmId",
+                name: "IX_FilmActeur_ActeurId",
                 table: "FilmActeur",
-                column: "FilmId");
+                column: "ActeurId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Films_GenreId",

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.Elfie.Serialization;
 using Microsoft.EntityFrameworkCore;
 using Movie.Models;
 
@@ -24,12 +25,7 @@ namespace Movie.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Film>>> GetFilms()
         {
-            return await _context.Films
-                    .Include(u => u.Acteurs)
-                    .Include(u => u.Genre)
-                    .Include(u => u.Realisateur)
-                    .Include(u => u.FilmsNotes)
-                    .ToListAsync();
+            return await _context.Films.Include(a=>a.Acteurs).ToListAsync();
         }
 
         // GET: api/Films/5
@@ -51,16 +47,39 @@ namespace Movie.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutFilm(long id, Film film)
         {
-            if (id != film.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(film).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                if (film.Acteurs != null)
+                {
+                    List<FilmActeur> dbActeurs;
+                    dbActeurs = new List<FilmActeur>();
+                    foreach (var acteurSent in film.Acteurs)
+                    {
+                        dbActeurs.Add(new FilmActeur() { FilmId = id, ActeurId = acteurSent.ActeurId });
+                    }
+
+                    Film filmDb = _context.Films.Where(f => f.Id == id).First();
+
+                    var FilmActeurs = _context.Set<FilmActeur>().Where(a => a.FilmId == id).ToList();
+
+                    foreach (var filmActeur in FilmActeurs)
+                    {
+                        _context.Set<FilmActeur>().Remove(filmActeur);
+                    }
+                    _context.SaveChanges();
+
+                    foreach (var acteur in dbActeurs)
+                    {
+                        filmDb.Acteurs?.Add(acteur);
+                        _context.SaveChanges();
+                    }
+                    _context.Entry(filmDb).State = EntityState.Modified;
+                }
+
+                _context.SaveChanges();
+
+                return CreatedAtAction("GetFilm", new { id = film.Id }, film);
+
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -82,18 +101,16 @@ namespace Movie.Controllers
         [HttpPost]
         public async Task<ActionResult<Film>> PostFilm(Film film)
         {
-            List<Acteur> dbActeurs;
+
+            List<FilmActeur> dbActeurs;
             List<UtilisateurFilmNote> UtilisateursFilmsNotes;
-            dbActeurs = new List<Acteur>();
+            dbActeurs = new List<FilmActeur>();
             UtilisateursFilmsNotes = new List<UtilisateurFilmNote>();
 
 
-            foreach (var acteurSent in film.Acteurs)
-            {
-                dbActeurs.Add(_context.Acteurs.Where(a => a.Id == acteurSent.Id).First());
-            }
 
-            if(film.FilmsNotes != null)
+
+            if (film.FilmsNotes != null)
             {
                 foreach (var filmNotes in film.FilmsNotes)
                 {
@@ -102,17 +119,21 @@ namespace Movie.Controllers
                 }
             }
 
-            //foreach (var utilisateurSent in film.Utilisateurs)
-            //{
-            //    dbUtilisateurs.Add(_context.Utilisateurs.Where(a => a.Id == utilisateurSent.Id).First());
-            //}
-
-            film.Acteurs = [];
-            film.Acteurs = dbActeurs;
-
-            //film.Utilisateurs = dbUtilisateurs;
 
             _context.Films.Add(film);
+
+            _context.SaveChanges();
+
+            if (film.Acteurs != null)
+            {
+                foreach (var acteurSent in film.Acteurs)
+                {
+                    dbActeurs.Add(new FilmActeur() { FilmId = film.Id, ActeurId = acteurSent.ActeurId });
+                }
+
+                film.Acteurs = [];
+                film.Acteurs = dbActeurs;
+            }
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetFilm", new { id = film.Id }, film);

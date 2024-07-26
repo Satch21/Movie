@@ -1,10 +1,11 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Hosting;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
 namespace Movie.Models
 {
-    public class Profil
+    public class Profil 
     {
         [Key]
         public long Id { get; set; }

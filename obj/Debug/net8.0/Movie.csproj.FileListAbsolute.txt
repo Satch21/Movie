@@ -860,3 +860,7 @@ C:\Users\lapor\source\repos\Satch21\Movie\obj\Debug\net8.0\Movie.genruntimeconfi
 C:\Users\lapor\source\repos\Satch21\Movie\obj\Debug\net8.0\ref\Movie.dll
 C:\Users\lapor\source\repos\Satch21\Movie\obj\Debug\net8.0\Movie.sourcelink.json
 C:\Users\lapor\source\repos\Satch21\Movie\bin\Debug\net8.0\init.json
+C:\Users\lapor\source\repos\Satch21\Movie\bin\Debug\net8.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\lapor\source\repos\Satch21\Movie\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+C:\Users\lapor\source\repos\Satch21\Movie\bin\Debug\net8.0\Microsoft.Extensions.Identity.Core.dll
+C:\Users\lapor\source\repos\Satch21\Movie\bin\Debug\net8.0\Microsoft.Extensions.Identity.Stores.dll

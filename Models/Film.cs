@@ -16,7 +16,7 @@ namespace Movie.Models
         public long RealisateurId { get; set; }
         public long GenreId { get; set; }
 
-        public ICollection<Acteur>? Acteurs { get; set; } = [];
+        public ICollection<FilmActeur>? Acteurs { get; set; } = [];
 
         public virtual ICollection<UtilisateurFilmNote>? FilmsNotes { get; set; }
 

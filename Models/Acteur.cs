@@ -12,6 +12,6 @@ namespace Movie.Models
         public String Prenom { get; set; }
 
         [JsonIgnore]
-        public ICollection<Film>? Films { get; set; } = [];
+        public ICollection<FilmActeur>? Films { get; set; } = [];
     }
 }

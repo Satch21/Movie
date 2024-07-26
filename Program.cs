@@ -1,6 +1,9 @@
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using Movie.Models;
+using System.Configuration;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,8 +14,16 @@ builder.Services.AddControllers();
 
 builder.Services.AddDbContext<MovieContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("MovieContextConnection")));
+
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+
+
+//builder.Services
+//    .AddIdentityApiEndpoints<Utilisateur>()
+//    .AddEntityFrameworkStores<MovieContext>();
 
 var app = builder.Build();
 

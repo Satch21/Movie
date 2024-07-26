@@ -80,3 +80,56 @@
 
 }
 
+{
+  "uuid": "00000000-0000-0000-0000-000000000000",
+  "titre": "Once upon a time in Hollywood",
+  "synopsis": "En 1969, la star de t�l�vision Rick Dalton et le cascadeur Cliff Booth, sa doublure de longue date, poursuivent leurs carri�res au sein d�une industrie qu�ils ne reconnaissent plus. ",
+  "duree": 161,
+  "anneeSortie": 2019,
+  "realisateurId": 1,
+  "genreId": 1,
+  "acteurs": [
+    {
+      "filmId": 0,
+      "acteurId": 1
+    },
+    {
+      "filmId": 0,
+      "acteurId": 2
+    }
+  ],
+  "genre": {
+    "id": 1,
+    "uuid": "00000000-0000-0000-0000-000000000000",
+    "label": "Action"
+  },
+  "realisateur": {
+    "id": 1,
+    "uuid": "00000000-0000-0000-0000-000000000000",
+    "nom": "Tarantino",
+    "prenom": "Quentin"
+  }
+}
+
+
+
+
+{
+  "uuid": "00000000-0000-0000-0000-000000000000",
+  "titre": "Once upon a time in Hollywood",
+  "synopsis": "En 1969, la star de t�l�vision Rick Dalton et le cascadeur Cliff Booth, sa doublure de longue date, poursuivent leurs carri�res au sein d�une industrie qu�ils ne reconnaissent plus. ",
+  "duree": 161,
+  "anneeSortie": 2019,
+  "realisateurId": 1,
+  "genreId": 1,
+  "acteurs": [
+    {
+      "filmId": 0,
+      "acteurId": 1
+    },
+    {
+      "filmId": 0,
+      "acteurId": 2
+    }
+  ]
+}

@@ -22,21 +22,6 @@ namespace Movie.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("FilmActeur", b =>
-                {
-                    b.Property<long>("ActeurId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("FilmId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("ActeurId", "FilmId");
-
-                    b.HasIndex("FilmId");
-
-                    b.ToTable("FilmActeur");
-                });
-
             modelBuilder.Entity("Movie.Models.Acteur", b =>
                 {
                     b.Property<long>("Id")
@@ -59,6 +44,22 @@ namespace Movie.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Acteurs");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            Nom = "Pitt",
+                            Prenom = "Brad",
+                            Uuid = new Guid("00000000-0000-0000-0000-000000000000")
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            Nom = "DiCaprio",
+                            Prenom = "Leonardo",
+                            Uuid = new Guid("00000000-0000-0000-0000-000000000000")
+                        });
                 });
 
             modelBuilder.Entity("Movie.Models.Film", b =>
@@ -102,6 +103,34 @@ namespace Movie.Migrations
                         .IsUnique();
 
                     b.ToTable("Films");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            AnneeSortie = 2019,
+                            Duree = 161,
+                            GenreId = 1L,
+                            RealisateurId = 1L,
+                            Synopsis = "En 1969, la star de télévision Rick Dalton et le cascadeur Cliff Booth, sa doublure de longue date, poursuivent leurs carrières au sein d’une industrie qu’ils ne reconnaissent plus. ",
+                            Titre = "Once upon a time in Hollywood",
+                            Uuid = new Guid("00000000-0000-0000-0000-000000000000")
+                        });
+                });
+
+            modelBuilder.Entity("Movie.Models.FilmActeur", b =>
+                {
+                    b.Property<long>("FilmId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ActeurId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("FilmId", "ActeurId");
+
+                    b.HasIndex("ActeurId");
+
+                    b.ToTable("FilmActeur");
                 });
 
             modelBuilder.Entity("Movie.Models.Genre", b =>
@@ -122,6 +151,14 @@ namespace Movie.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Genres");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            Label = "Action",
+                            Uuid = new Guid("00000000-0000-0000-0000-000000000000")
+                        });
                 });
 
             modelBuilder.Entity("Movie.Models.Profil", b =>
@@ -142,6 +179,26 @@ namespace Movie.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Profils");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            Label = "Admin",
+                            Uuid = new Guid("00000000-0000-0000-0000-000000000000")
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            Label = "Contributeur",
+                            Uuid = new Guid("00000000-0000-0000-0000-000000000000")
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            Label = "Observateur",
+                            Uuid = new Guid("00000000-0000-0000-0000-000000000000")
+                        });
                 });
 
             modelBuilder.Entity("Movie.Models.Realisateur", b =>
@@ -166,6 +223,15 @@ namespace Movie.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Realisateurs");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            Nom = "Tarantino",
+                            Prenom = "Quentin",
+                            Uuid = new Guid("00000000-0000-0000-0000-000000000000")
+                        });
                 });
 
             modelBuilder.Entity("Movie.Models.Utilisateur", b =>
@@ -222,21 +288,6 @@ namespace Movie.Migrations
                     b.ToTable("UtilisateurFilmNote");
                 });
 
-            modelBuilder.Entity("FilmActeur", b =>
-                {
-                    b.HasOne("Movie.Models.Acteur", null)
-                        .WithMany()
-                        .HasForeignKey("ActeurId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Movie.Models.Film", null)
-                        .WithMany()
-                        .HasForeignKey("FilmId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Movie.Models.Film", b =>
                 {
                     b.HasOne("Movie.Models.Genre", "Genre")
@@ -254,6 +305,25 @@ namespace Movie.Migrations
                     b.Navigation("Genre");
 
                     b.Navigation("Realisateur");
+                });
+
+            modelBuilder.Entity("Movie.Models.FilmActeur", b =>
+                {
+                    b.HasOne("Movie.Models.Acteur", "Acteur")
+                        .WithMany("Films")
+                        .HasForeignKey("ActeurId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Movie.Models.Film", "Film")
+                        .WithMany("Acteurs")
+                        .HasForeignKey("FilmId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Acteur");
+
+                    b.Navigation("Film");
                 });
 
             modelBuilder.Entity("Movie.Models.Utilisateur", b =>
@@ -286,8 +356,15 @@ namespace Movie.Migrations
                     b.Navigation("Utilisateur");
                 });
 
+            modelBuilder.Entity("Movie.Models.Acteur", b =>
+                {
+                    b.Navigation("Films");
+                });
+
             modelBuilder.Entity("Movie.Models.Film", b =>
                 {
+                    b.Navigation("Acteurs");
+
                     b.Navigation("FilmsNotes");
                 });
 
