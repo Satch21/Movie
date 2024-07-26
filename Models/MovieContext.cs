@@ -66,19 +66,20 @@ public class MovieContext : DbContext
                r => r.HasOne(typeof(Film)).WithMany().HasForeignKey("FilmId").HasPrincipalKey(nameof(Film.Id)),
                j => j.HasKey("ActeurId", "FilmId"));
 
-        //builder.Entity<FilmUtilisateurNote>()
-        //.HasKey(fa => new { fa.FilmId, fa.UtilisateurId });
 
-        //builder.Entity<FilmUtilisateurNote>()
-        //      .HasOne(fun => fun.Film)
-        //      .WithMany(f => f.Notes)
-        //      .HasForeignKey(fun => fun.FilmId);
 
-        //builder.Entity<FilmUtilisateurNote>()
-        //    .HasOne(fun => fun.Utilisateur)
-        //    .WithMany(f => f.Notes)
-        //    .HasForeignKey(fc => fc.UtilisateurId);
+        builder.Entity<UtilisateurFilmNote>()
+                 .HasKey(ufn => new { ufn.FilmId, ufn.UtilisateurId });
+
+        builder.Entity<UtilisateurFilmNote>()
+            .HasOne(r => r.Utilisateur)
+            .WithMany(t => t.FilmsNotes)
+            .HasForeignKey(f => f.UtilisateurId);
+
+        builder.Entity<UtilisateurFilmNote>()
+            .HasOne(r => r.Film)
+            .WithMany(t => t.FilmsNotes)
+            .HasForeignKey(f => f.FilmId);
     }
-
-//public DbSet<Movie.Models.FilmActeur> FilmActeur { get; set; } = default!;
+   
 }

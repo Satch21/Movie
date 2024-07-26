@@ -1,0 +1,82 @@
+{
+  "nom": "Pitt",
+  "prenom": "Brad"
+} {
+  "nom": "Cruise",
+  "prenom": "Tom"
+} {
+
+  "label": "Action"
+} {
+
+  "nom": "Scorcese",
+  "prenom": "Martin"
+} {
+
+  "label": "Admin"
+} {
+
+  "titre": "Taxi Driver",
+  "synopsis": "tzzegzeg",
+  "duree": 120,
+  "anneeSortie": 1984,
+  "realisateurId": 1,
+  "genreId": 1,
+  "acteurs": [
+    {
+      "id": 1,
+      "nom": "Pitt",
+      "prenom": "Brad"
+    },
+    {
+      "id": 2,
+      "nom": "Cruise",
+      "prenom": "Tom"
+    }
+  ]
+} {
+
+  "nom": "tt",
+  "prenom": "tt",
+  "email": "user@example.com",
+  "profilId": 1,
+  "filmsNotes": [
+    {
+      "film": {
+        "id": 1,
+        "uuid": "00000000-0000-0000-0000-000000000000",
+        "titre": "Taxi Driver",
+        "synopsis": "tzzegzeg",
+        "duree": 120,
+        "anneeSortie": 1984,
+        "realisateurId": 1,
+        "genreId": 1,
+  ],
+  "genre": {
+    "id": 0,
+    "uuid": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "label": "string"
+  },
+  "realisateur": {
+    "id": 1,
+
+    "nom": "Scorcese",
+    "prenom": "Martin"
+  }
+}
+
+{
+
+  "nom": "Laporte",
+  "prenom": "Jean-Michel",
+  "email": "laportjem@free.fr",
+  "profilId": 1,
+  "filmsNotes": [
+    {
+      "filmId": 1,
+      "note": 5
+    }
+  ]
+
+}
+

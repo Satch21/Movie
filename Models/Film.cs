@@ -18,6 +18,8 @@ namespace Movie.Models
 
         public ICollection<Acteur>? Acteurs { get; set; } = [];
 
+        public virtual ICollection<UtilisateurFilmNote>? FilmsNotes { get; set; }
+
         public Genre? Genre { get; set; }
 
         public Realisateur? Realisateur { get; set; }

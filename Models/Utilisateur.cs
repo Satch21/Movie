@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Movie.Models
@@ -17,5 +18,7 @@ namespace Movie.Models
         public String Email { get; set; }
         public long ProfilId { get; set; }
         public Profil? Profil { get; set; }
+
+        public virtual ICollection<UtilisateurFilmNote>? FilmsNotes { get; set; }
     }
 }

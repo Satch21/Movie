@@ -25,7 +25,7 @@ namespace Movie.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Utilisateur>>> GetUtilisateurs()
         {
-            return await _context.Utilisateurs.Include(u => u.Profil).ToListAsync();
+            return await _context.Utilisateurs.Include(u => u.Profil).Include(u => u.FilmsNotes).ToListAsync();
         }
 
         // GET: api/Utilisateurs/5
@@ -78,9 +78,27 @@ namespace Movie.Controllers
         [HttpPost]
         public async Task<ActionResult<Utilisateur>> PostUtilisateur(Utilisateur utilisateur)
         {
-            _context.Utilisateurs.Add(utilisateur);
-            await _context.SaveChangesAsync();
 
+            List<UtilisateurFilmNote> UtilisateursFilmsNotes;
+            UtilisateursFilmsNotes = new List<UtilisateurFilmNote>();
+            foreach (var filmNotes in utilisateur.FilmsNotes)
+            {
+                UtilisateursFilmsNotes.Add(new UtilisateurFilmNote() { FilmId = filmNotes.FilmId, Note = filmNotes.Note});
+            }
+
+            _context.Utilisateurs.Add(utilisateur);
+
+            utilisateur.FilmsNotes.Clear();
+
+             _context.SaveChanges();
+
+            foreach (var filmNotes in UtilisateursFilmsNotes)
+            {
+                filmNotes.UtilisateurId = utilisateur.Id;
+                utilisateur.FilmsNotes.Add(filmNotes);
+            }
+
+            await _context.SaveChangesAsync();
             return CreatedAtAction("GetUtilisateur", new { id = utilisateur.Id }, utilisateur);
         }
 

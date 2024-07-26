@@ -28,6 +28,7 @@ namespace Movie.Controllers
                     .Include(u => u.Acteurs)
                     .Include(u => u.Genre)
                     .Include(u => u.Realisateur)
+                    .Include(u => u.FilmsNotes)
                     .ToListAsync();
         }
 
@@ -82,14 +83,35 @@ namespace Movie.Controllers
         public async Task<ActionResult<Film>> PostFilm(Film film)
         {
             List<Acteur> dbActeurs;
+            List<UtilisateurFilmNote> UtilisateursFilmsNotes;
             dbActeurs = new List<Acteur>();
+            UtilisateursFilmsNotes = new List<UtilisateurFilmNote>();
+
+
             foreach (var acteurSent in film.Acteurs)
             {
                 dbActeurs.Add(_context.Acteurs.Where(a => a.Id == acteurSent.Id).First());
             }
 
+            if(film.FilmsNotes != null)
+            {
+                foreach (var filmNotes in film.FilmsNotes)
+                {
+                    var utilisateur = _context.Utilisateurs.Where(u => u.Id == filmNotes.UtilisateurId).First();
+                    filmNotes.Utilisateur = utilisateur;
+                }
+            }
+
+            //foreach (var utilisateurSent in film.Utilisateurs)
+            //{
+            //    dbUtilisateurs.Add(_context.Utilisateurs.Where(a => a.Id == utilisateurSent.Id).First());
+            //}
+
             film.Acteurs = [];
             film.Acteurs = dbActeurs;
+
+            //film.Utilisateurs = dbUtilisateurs;
+
             _context.Films.Add(film);
             await _context.SaveChangesAsync();
 

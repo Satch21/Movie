@@ -858,3 +858,5 @@ C:\Users\lapor\source\repos\Satch21\Movie\obj\Debug\net8.0\refint\Movie.dll
 C:\Users\lapor\source\repos\Satch21\Movie\obj\Debug\net8.0\Movie.pdb
 C:\Users\lapor\source\repos\Satch21\Movie\obj\Debug\net8.0\Movie.genruntimeconfig.cache
 C:\Users\lapor\source\repos\Satch21\Movie\obj\Debug\net8.0\ref\Movie.dll
+C:\Users\lapor\source\repos\Satch21\Movie\obj\Debug\net8.0\Movie.sourcelink.json
+C:\Users\lapor\source\repos\Satch21\Movie\bin\Debug\net8.0\init.json

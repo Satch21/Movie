@@ -204,6 +204,24 @@ namespace Movie.Migrations
                     b.ToTable("Utilisateurs");
                 });
 
+            modelBuilder.Entity("Movie.Models.UtilisateurFilmNote", b =>
+                {
+                    b.Property<long>("FilmId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("UtilisateurId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Note")
+                        .HasColumnType("int");
+
+                    b.HasKey("FilmId", "UtilisateurId");
+
+                    b.HasIndex("UtilisateurId");
+
+                    b.ToTable("UtilisateurFilmNote");
+                });
+
             modelBuilder.Entity("FilmActeur", b =>
                 {
                     b.HasOne("Movie.Models.Acteur", null)
@@ -249,6 +267,30 @@ namespace Movie.Migrations
                     b.Navigation("Profil");
                 });
 
+            modelBuilder.Entity("Movie.Models.UtilisateurFilmNote", b =>
+                {
+                    b.HasOne("Movie.Models.Film", "Film")
+                        .WithMany("FilmsNotes")
+                        .HasForeignKey("FilmId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Movie.Models.Utilisateur", "Utilisateur")
+                        .WithMany("FilmsNotes")
+                        .HasForeignKey("UtilisateurId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Film");
+
+                    b.Navigation("Utilisateur");
+                });
+
+            modelBuilder.Entity("Movie.Models.Film", b =>
+                {
+                    b.Navigation("FilmsNotes");
+                });
+
             modelBuilder.Entity("Movie.Models.Genre", b =>
                 {
                     b.Navigation("Films");
@@ -262,6 +304,11 @@ namespace Movie.Migrations
             modelBuilder.Entity("Movie.Models.Realisateur", b =>
                 {
                     b.Navigation("Films");
+                });
+
+            modelBuilder.Entity("Movie.Models.Utilisateur", b =>
+                {
+                    b.Navigation("FilmsNotes");
                 });
 #pragma warning restore 612, 618
         }

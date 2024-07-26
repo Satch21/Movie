@@ -147,6 +147,31 @@ namespace Movie.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "UtilisateurFilmNote",
+                columns: table => new
+                {
+                    FilmId = table.Column<long>(type: "bigint", nullable: false),
+                    UtilisateurId = table.Column<long>(type: "bigint", nullable: false),
+                    Note = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UtilisateurFilmNote", x => new { x.FilmId, x.UtilisateurId });
+                    table.ForeignKey(
+                        name: "FK_UtilisateurFilmNote_Films_FilmId",
+                        column: x => x.FilmId,
+                        principalTable: "Films",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UtilisateurFilmNote_Utilisateurs_UtilisateurId",
+                        column: x => x.UtilisateurId,
+                        principalTable: "Utilisateurs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_FilmActeur_FilmId",
                 table: "FilmActeur",
@@ -169,6 +194,11 @@ namespace Movie.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_UtilisateurFilmNote_UtilisateurId",
+                table: "UtilisateurFilmNote",
+                column: "UtilisateurId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Utilisateurs_Email",
                 table: "Utilisateurs",
                 column: "Email",
@@ -187,7 +217,7 @@ namespace Movie.Migrations
                 name: "FilmActeur");
 
             migrationBuilder.DropTable(
-                name: "Utilisateurs");
+                name: "UtilisateurFilmNote");
 
             migrationBuilder.DropTable(
                 name: "Acteurs");
@@ -196,13 +226,16 @@ namespace Movie.Migrations
                 name: "Films");
 
             migrationBuilder.DropTable(
-                name: "Profils");
+                name: "Utilisateurs");
 
             migrationBuilder.DropTable(
                 name: "Genres");
 
             migrationBuilder.DropTable(
                 name: "Realisateurs");
+
+            migrationBuilder.DropTable(
+                name: "Profils");
         }
     }
 }
