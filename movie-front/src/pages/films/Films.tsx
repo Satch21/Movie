@@ -17,17 +17,17 @@ const Films = () => {
     useEffect(() => {
         !isMounted &&
             FilmDataService.getAll().then((json) => {
-                setFilms(json);
+                setFilms(json.data);
                 setIsMounted(true);
             });
     }, [isMounted]);
 
     return (
         <ul>
-            {films && films.map((user, index) => {
+            {films && films.map((film, index) => {
                 return (
                     <li key={index}>
-                        {user.Titre}
+                        {film.titre}
                     </li>
                 );
             })}

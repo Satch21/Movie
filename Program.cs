@@ -7,6 +7,7 @@ using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var MovieFront = "AuthorizeFront";
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -15,9 +16,19 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<MovieContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("MovieContextConnection")));
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MovieFront,
+                      policy =>
+                      {
+                          policy.WithOrigins("http://localhost:5173");
+                      });
+});
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+
 
 
 
@@ -36,6 +47,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(MovieFront);
 
 app.UseAuthorization();
 
