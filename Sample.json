@@ -2,8 +2,30 @@
 //Post pour ajouter un acteur
 {
   "nom": "Thurman",
-  "prenom":  "Uma"
+  "prenom": "Uma"
 
+}
+
+//Post pour ajouter un utilisateur :
+{
+  "nom": "Laporte",
+  "prenom": "Jean-Michel",
+  "email": "laportejm@free.fr",
+  "profilId": 1
+}
+
+//PUT pour ajouter une note au film Once upon a time in Hollywood pour l'utilisateur 1
+{
+  "nom": "Laporte",
+  "prenom": "Jean-Michel",
+  "email": "laportejm@fee.fr",
+  "profilId": 1,
+  "filmsNotes": [
+    {
+      "filmId": 1,
+      "note": 5
+    }
+  ]
 }
 
 //Post pour ajout d'un nouveau film => utilisable dans Swagger
@@ -18,6 +40,28 @@
   "acteurs": [
     {
       "acteurId": 3
+    }
+  ]
+}
+
+
+//Put pour la modification du film  Once upon a time in Hollywood en ajoutant des acteurs => utilisable dans Swagger avec l'id 1
+{
+  "uuid": "00000000-0000-0000-0000-000000000000",
+  "titre": "Once upon a time in Hollywood",
+  "synopsis": "En 1969, la star de télévision Rick Dalton et le cascadeur Cliff Booth, sa doublure de longue date, poursuivent leurs carrières au sein d�une industrie qu'ils ne reconnaissent plus. ",
+  "duree": 161,
+  "anneeSortie": 2019,
+  "realisateurId": 1,
+  "genreId": 1,
+  "acteurs": [
+    {
+      "filmId": 0,
+      "acteurId": 1
+    },
+    {
+      "filmId": 0,
+      "acteurId": 2
     }
   ]
 }

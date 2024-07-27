@@ -17,6 +17,8 @@ public class MovieContext : DbContext
 
     public DbSet<Film> Films { get; set; } = null!;
 
+    public DbSet<Utilisateur> Utilisateurs { get; set; } = null!;
+
     public DbSet<Acteur> Acteurs { get; set; } = null!;
 
     public DbSet<Genre> Genres { get; set; } = null!;
@@ -24,8 +26,6 @@ public class MovieContext : DbContext
     public DbSet<Profil> Profils { get; set; } = null!;
 
     public DbSet<Realisateur> Realisateurs { get; set; } = null!;
-
-    public DbSet<Utilisateur> Utilisateurs { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

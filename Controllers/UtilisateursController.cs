@@ -47,16 +47,51 @@ namespace Movie.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUtilisateur(long id, Utilisateur utilisateur)
         {
-            if (id != utilisateur.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(utilisateur).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                if (utilisateur.FilmsNotes != null)
+                {
+                    List<UtilisateurFilmNote> dbUtilisateurFilmNotesToInsert;
+                    dbUtilisateurFilmNotesToInsert = new List<UtilisateurFilmNote>();
+                    Utilisateur utilisateurDb = _context.Utilisateurs.Where(u => u.Id == id).First();
+
+                    foreach (var noteSent in utilisateur.FilmsNotes)
+                    {
+                        dbUtilisateurFilmNotesToInsert.Add(new UtilisateurFilmNote() { FilmId = id, UtilisateurId = id, Note = noteSent.Note });
+                    }
+
+                    
+                    //Récupération des notes de l'utilisateur courant 
+                    List<UtilisateurFilmNote> UtilisateurFilmNotesDb = _context.Set<UtilisateurFilmNote>().Where(u => u.UtilisateurId == id).ToList();
+
+                    //Suppression des notes pour les films et l'utilisateur par rapport aux données envoyées dans la requête
+                    foreach (var utilisateurFilmNoteInDb in UtilisateurFilmNotesDb)
+                    {
+                        foreach (var noteSent in utilisateur.FilmsNotes)
+                        {
+                            if(noteSent.FilmId == utilisateurFilmNoteInDb.FilmId)
+                            {
+                                _context.Set<UtilisateurFilmNote>().Remove(utilisateurFilmNoteInDb);
+                            }
+                        }
+                    }
+
+                    _context.SaveChanges();
+
+                    //Ajout des notes envoyées dans la requête
+                    foreach (var utilisateurFilmNote in dbUtilisateurFilmNotesToInsert)
+                    {
+                        utilisateurDb.FilmsNotes?.Add(utilisateurFilmNote);
+                        _context.SaveChanges();
+                    }
+
+                    _context.Entry(utilisateurDb).State = EntityState.Modified;
+                }
+
+                _context.SaveChanges();
+
+                return CreatedAtAction("GetUtilisateur", new { id = utilisateur.Id }, utilisateur);
+
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -81,21 +116,27 @@ namespace Movie.Controllers
 
             List<UtilisateurFilmNote> UtilisateursFilmsNotes;
             UtilisateursFilmsNotes = new List<UtilisateurFilmNote>();
-            foreach (var filmNotes in utilisateur.FilmsNotes)
+
+            if(utilisateur.FilmsNotes != null)
             {
-                UtilisateursFilmsNotes.Add(new UtilisateurFilmNote() { FilmId = filmNotes.FilmId, Note = filmNotes.Note});
+                foreach (var filmNotes in utilisateur.FilmsNotes)
+                {
+                    UtilisateursFilmsNotes.Add(new UtilisateurFilmNote() { FilmId = filmNotes.FilmId, Note = filmNotes.Note });
+                }
+                utilisateur.FilmsNotes.Clear();
             }
 
             _context.Utilisateurs.Add(utilisateur);
 
-            utilisateur.FilmsNotes.Clear();
+            _context.SaveChanges();
 
-             _context.SaveChanges();
-
-            foreach (var filmNotes in UtilisateursFilmsNotes)
+            if (utilisateur.FilmsNotes != null)
             {
-                filmNotes.UtilisateurId = utilisateur.Id;
-                utilisateur.FilmsNotes.Add(filmNotes);
+                foreach (var filmNotes in UtilisateursFilmsNotes)
+                {
+                    filmNotes.UtilisateurId = utilisateur.Id;
+                    utilisateur.FilmsNotes.Add(filmNotes);
+                }
             }
 
             await _context.SaveChangesAsync();

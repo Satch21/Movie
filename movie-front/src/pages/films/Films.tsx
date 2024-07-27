@@ -1,12 +1,16 @@
 import { useState, useEffect } from 'react';
 import FilmDataService from "../../services/film.service.ts";
 import IFilmData from '../../types/film.type.ts';
+import MaterialTable, { Column } from "@material-table/core";
 
 type Props = {};
 
-type State = ITutorialData & {
-    submitted: boolean
-};
+const columns: Array<Column<IFilmData>> = [
+    { title: "Titre", field: "titre" },
+    { title: "Duree", field: "duree" },
+    { title: "Annee de sortie", field: "anneeSortie" }
+];
+
 
 
 const Films = () => {
@@ -23,15 +27,7 @@ const Films = () => {
     }, [isMounted]);
 
     return (
-        <ul>
-            {films && films.map((film, index) => {
-                return (
-                    <li key={index}>
-                        {film.titre}
-                    </li>
-                );
-            })}
-        </ul>
+        <MaterialTable columns={columns} data={films}></MaterialTable>
     );
 };
 

@@ -1,5 +1,7 @@
 export default interface IFilmData {
 	id?: any | null,
-	Titre: string,
-	Synopsis: string,
+	titre: string,
+	synopsis: string,
+	duree: number,
+	anneeSortie:number
 }

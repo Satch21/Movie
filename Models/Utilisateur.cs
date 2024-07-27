@@ -5,6 +5,7 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Movie.Models
 {
+    //Créer une classe model dédiée à l'update (ne plus être bloqué par le validateur)
     public class Utilisateur
     {
         [Key]
