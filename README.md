@@ -1,7 +1,6 @@
 Installation du projet Movie 
 
 - Back :
-  - 
   - Initisalition de la bdd : dotnet ef database update
   - Build et lancement de l'api :
         - Swagger : https://localhost:7261/swagger/index.html
@@ -9,6 +8,5 @@ Installation du projet Movie
   - Le fichier Sample.json contient des exemples d'appels à l'api utilisables dans Swagger
 
 - Front :
-- 
    - npm run dev à la racine de movie-front
    - changer le port dans http-common.ts au niveau de l'url de l'api (exemple baseURL: "https://localhost:7261/api") 
