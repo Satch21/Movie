@@ -1,7 +1,7 @@
 Installation du projet Movie 
 
 - Back :
-  - Initisalition de la bdd : dotnet ef database update
+  - Initisalition de la bdd : dotnet ef database update (des données seront pré chargées via seeding dans la migration d'initialisation de la base)
   - Build et lancement de l'api :
         - Swagger : https://localhost:7261/swagger/index.html
   - Dans Program.cs, changer l'adresse du front en fonction du port (exemple policy.WithOrigins("http://localhost:5173"))
